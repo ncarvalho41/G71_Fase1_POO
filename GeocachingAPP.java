@@ -106,7 +106,7 @@ public class GeocachingAPP implements Serializable
     
     case 2 : adminLogin();
     
-    case 3 : criarUser();
+    case 3 : criaUser();
     }
     }
     
@@ -152,15 +152,39 @@ public class GeocachingAPP implements Serializable
    boolean log = rede.validaLoginAdmin(adm, pwd);
    
    if(log) {
-   admin = rede.getAdmin(adm);
-   paginaAdmin();
+   //admin = rede.getAdmin(adm);
+   //paginaAdmin();
    }
    }
     
+    //Método que permite criar novo utilizador
+    
+    public static void criaUser(){
+    
+    User u = new User();
+    System.out.println("Criar novo Utilizador\n\n");
+    System.out.println("Introduza o seu nome: ");
+    u.setNome(input.lerString());
+    System.out.println("\nIntroduza o seu email: ");
+    u.setEmail(input.lerString());
+    System.out.println("\nIntroduza a sua password: ");
+    u.setPw(input.lerString());
+    System.out.println("\nIntroduza o seu género: (M - Masculino, F- Feminino)");
+    u.setGenero(input.lerString());
+    System.out.println("\nIntroduza a sua morada: ");
+    u.setMorada(input.lerString());
+    System.out.println("\nIntroduza a sua data de nascimento: (DD/MM/AAAA)\n\n");
+    //u.setData(input.lerString());
+    
+    consultaInfo(u.getEmail());
+
+    }
+   
     //Método que permite consultar página pessoal de Utilizador normal
     
     public static void paginaPessoalUser()
     {
+    
     }
    
     //Método que permite consultar informação pessoal     

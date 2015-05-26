@@ -6,4 +6,6 @@ comment1.params=email
 comment1.target=User\ getUser(java.lang.String)
 comment2.params=usr\ pwd
 comment2.target=boolean\ validaLogin(java.lang.String,\ java.lang.String)
-numComments=3
+comment3.params=adm\ pwd
+comment3.target=boolean\ validaLoginAdmin(java.lang.String,\ java.lang.String)
+numComments=4

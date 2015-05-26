@@ -34,11 +34,12 @@ public class Rede implements Serializable {
    {
        return users.containsKey(email);
     }
-
-
-   public Admin getAdmin(String email){
-   return admin.get(email).clone();
-   }
+   
+    //Método que devolve utilizador do tipo Admin
+    
+   //public Admin getAdmin(String email){
+   //}
+   
    
    //Método que devolve utilizador
    public User getUser(String email)
@@ -56,5 +57,28 @@ public class Rede implements Serializable {
    catch (Exception e){
    return false;}
 
-}
+  }
+
+    public boolean validaLoginAdmin(String adm, String pwd){
+    try{
+    return(this.admin.getEmail().equals(adm) && this.admin.getPw().equals(pwd));
+    }
+    catch (Exception e)
+    {
+    return false;
+    }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
