@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Coord()
+comment0.text=\n\ Construtores\n
+comment1.params=g\ min\ seg\ dir
+comment1.target=Coord(int,\ int,\ int,\ java.lang.String)
+comment10.params=dir
+comment10.target=void\ setDir(java.lang.String)
+comment2.params=c
+comment2.target=Coord(Coord)
+comment3.params=
+comment3.target=int\ getGrau()
+comment4.params=
+comment4.target=int\ getMin()
+comment5.params=
+comment5.target=int\ getSeg()
+comment6.params=
+comment6.target=java.lang.String\ getDir()
+comment7.params=g
+comment7.target=void\ setGrau(int)
+comment8.params=min
+comment8.target=void\ setMin(int)
+comment9.params=seg
+comment9.target=void\ setSeg(int)
+numComments=11

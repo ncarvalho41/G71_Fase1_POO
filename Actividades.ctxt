@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Actividades()
+comment1.params=inicio\ fim\ tipo
+comment1.target=Actividades(java.util.GregorianCalendar,\ java.util.GregorianCalendar,\ java.lang.String)
+comment2.params=u
+comment2.target=Actividades(Actividades)
+comment3.params=
+comment3.target=java.util.GregorianCalendar\ getInicio()
+comment4.params=
+comment4.target=java.util.GregorianCalendar\ getFim()
+comment5.params=
+comment5.target=java.lang.String\ getTipo()
+comment6.params=i
+comment6.target=void\ setInicio(java.util.GregorianCalendar)
+comment7.params=f
+comment7.target=void\ setFim(java.util.GregorianCalendar)
+comment8.params=t
+comment8.target=void\ setTipo(java.lang.String)
+numComments=9

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=email
+comment0.target=boolean\ existeUser(java.lang.String)
+comment0.text=\n\ \n
+comment1.params=email
+comment1.target=User\ getUser(java.lang.String)
+comment2.params=usr\ pwd
+comment2.target=boolean\ validaLogin(java.lang.String,\ java.lang.String)
+numComments=3

@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.params=
+comment0.target=CacheMisterio()
+comment0.text=\n\ Construtores\n
+comment1.params=pz\ codigo\ criador\ data\ descricao_extra\ coordenadas
+comment1.target=CacheMisterio(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.util.GregorianCalendar,\ java.lang.String,\ Coordenadas)
+comment2.params=cm
+comment2.target=CacheMisterio(CacheMisterio)
+comment3.params=
+comment3.target=java.lang.String\ getPuzzle()
+comment4.params=pz
+comment4.target=void\ setPuzzle(java.lang.String)
+numComments=5

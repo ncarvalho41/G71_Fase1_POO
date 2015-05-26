@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=
+comment0.target=MicroCache()
+comment0.text=\n\ Construtores\n
+comment1.params=codigo\ criador\ data\ descricao_extra\ coordenadas
+comment1.target=MicroCache(java.lang.String,\ java.lang.String,\ java.util.GregorianCalendar,\ java.lang.String,\ Coordenadas)
+comment2.params=mc
+comment2.target=MicroCache(MicroCache)
+numComments=3

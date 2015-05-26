@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Coordenadas()
+comment0.text=\n\ Construtores\n
+comment1.params=lat\ longt
+comment1.target=Coordenadas(Coord,\ Coord)
+comment2.params=c
+comment2.target=Coordenadas(Coordenadas)
+comment3.params=
+comment3.target=Coord\ getLat()
+comment4.params=
+comment4.target=Coord\ getLongt()
+comment5.params=lat
+comment5.target=void\ setLat(Coord)
+comment6.params=longt
+comment6.target=void\ setLongt(Coord)
+numComments=7
