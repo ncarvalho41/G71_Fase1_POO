@@ -18,53 +18,27 @@ import java.io.FileInputStream;
 
 public class GeocachingAPP implements Serializable
     {
-        public User user;
-        public Input input;
-        
-        private Rede rede;
-        
+        private static User user;
+        private static Input input;
+        private static Admin admin;
+        private static Rede rede;
+    
+    public static void main(){
+    init();
+    carregaMenuInicial();
+    }    
+    
+    
     /*
      * Construtores
      */
      
-    public GeocachingAPP(){
+    public static void init(){
     user = new User();
     input = new Input();
     rede = new Rede();
     }
-    
-    //Construtor clone
-    public GeocachingAPP (GeocachingAPP geo){
-    GeocachingAPP copia = new GeocachingAPP();
-    copia.setUser(this.getUser());
-    copia.setRede(this.getRede());
-    copia.setInput(this.getInput());
-    }
-    
-    //GETS
-    public User getUser(){
-    return this.user;}
-    
-    public Input getInput(){
-    return this.input;}
-    
-    public Rede getRede(){
-    return this.rede;}
-    
-    //SETS 
-    
-    public void setUser(User u) {
-    this.user = u;
-    }
-    
-    public void setInput(Input i) {
-    this.input = i;}
-    
-    public void setRede(Rede r){
-    this.rede = r;}
-    
-    
-    
+
     //
  /*
  * Métodos
@@ -72,7 +46,7 @@ public class GeocachingAPP implements Serializable
 
     //Método que cria o menu inicial
 
-    public void carregaMenuInicial()
+    public static void carregaMenuInicial()
     {
         int op = 0;
         boolean ativo = true;
@@ -88,28 +62,27 @@ public class GeocachingAPP implements Serializable
        }
     
     //Método que carrega ficheiro guardado
-    public void carregaFicheiro(){
+    public static void carregaFicheiro(){
     try{
     ObjectInputStream ois = new ObjectInputStream(new FileInputStream("geocachingPOO.joc"));
-    GeocachingAPP geoAPP = (GeocachingAPP) ois.readObject();
-    this.user = geoAPP.getUser();
-    this.rede = geoAPP.getRede();
-    this.input = geoAPP.getInput();
+    rede = (Rede) ois.readObject();
     ois.close();
     } 
     catch(Exception ex) {
     ex.printStackTrace();
     }
-    
+    criaHomepage();
     }
     //Método que cria o ficheiro de trabalho
-    public void criaFicheiro()
+    public static void criaFicheiro()
     {
     try{
     FileOutputStream fout = new FileOutputStream("geocachingPOO.joc");
+    
     ObjectOutputStream obj = new ObjectOutputStream(fout);
     
-    obj.writeObject(this.clone());
+    obj.writeObject(rede);
+    obj.flush();
     obj.close();
     }
     
@@ -118,38 +91,81 @@ public class GeocachingAPP implements Serializable
     }
     }
     
+    //Método que cria Homepage
+    
+    public static void criaHomepage(){
+    System.out.println("GeocachingAPP --- Homepage\n\n\n");
+    System.out.println("1 - Fazer login como utilizador normal\n");
+    System.out.println("2 - Fazer login como Administrador\n");
+    System.out.println("3 - Criar nova conta\n");
+    
+    int opc = input.lerInt();
+    
+    switch (opc) {
+    case 1 : userLogin();
+    
+    case 2 : adminLogin();
+    
+    case 3 : criarUser();
+    }
+    }
+    
     //Método que executa login de utilizador normal
-    public void userLogin()
+    public static void userLogin()
     {
     String usr = "";
     String pwd = "";
     
-    System.out.println("Insira Utilizador\n");
+    System.out.println("Insira email Utilizador\n");
     usr = input.lerString();
     System.out.println("Insira a password\n");
     pwd = input.lerString();
     
     boolean login = rede.validaLogin(usr, pwd);
     
-   // if(login) { paginaPessoal(usr);
-    //}
-     //else 
+   if(login) { 
+       user = rede.getUser(usr);
+       paginaPessoalUser();
+   } else 
      { 
     System.out.println("\nUtilizador ou password inválidos!");
-    System.out.println("\n 1 - Tentar Novamente       0 - Sair");        
+    System.out.println("\n 1 - Tentar Novamente       2 - Sair");        
     int opc = input.lerInt();
     switch(opc){
     case 1: userLogin(); break;
-    case 0: carregaMenuInicial(); break;  
+    case 2: carregaMenuInicial(); break;  
                    
     }
     
     }
    }
     
+   //Método que executa login do administrador
+   public static void adminLogin(){
+   String adm = "";
+   String pwd = "";
+   System.out.println("Insira email do Admin\n");
+   adm = input.lerString();
+   System.out.println("Insira password Admin\n");
+   pwd = input.lerString();
+   
+   boolean log = rede.validaLoginAdmin(adm, pwd);
+   
+   if(log) {
+   admin = rede.getAdmin(adm);
+   paginaAdmin();
+   }
+   }
+    
+    //Método que permite consultar página pessoal de Utilizador normal
+    
+    public static void paginaPessoalUser()
+    {
+    }
+   
     //Método que permite consultar informação pessoal     
 
-    public void consultaInfo(String email){
+    public static void consultaInfo(String email){
     if (rede.existeUser(email))
         {
         User u = rede.getUser(email);
@@ -160,21 +176,9 @@ public class GeocachingAPP implements Serializable
     }  
     
     //Método que permite consultar lista de amigos de um utilizador     
-    public void consultaListaAmigos(String email)
+    public static void consultaListaAmigos(String email)
     {
     rede.getUser(email).getListaAmigos();
-    }
-    
-    //Método que cria página pessoal de utilizador normal
-    
-    //Treze
-    
-    
-
-    
-    
-    public GeocachingAPP clone(){
-    return new GeocachingAPP(this);
     }
     
     }

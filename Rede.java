@@ -14,10 +14,10 @@ import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.HashMap;
 
-public class Rede
-{
+public class Rede implements Serializable {
+    
    private HashMap<String, User> users;
-   
+   private Admin admin;
    
 
 /*
@@ -35,8 +35,12 @@ public class Rede
        return users.containsKey(email);
     }
 
-   //Método que devolve utilizador
 
+   public Admin getAdmin(String email){
+   return admin.get(email).clone();
+   }
+   
+   //Método que devolve utilizador
    public User getUser(String email)
    {
        return users.get(email).clone();
@@ -45,6 +49,12 @@ public class Rede
    //Método que valida login do utilizador
    
    public boolean validaLogin(String usr, String pwd){
+       
+   try{    
    return(this.users.containsKey(usr) && this.users.get(usr).getPw().equals(pwd));
-   }
+   } 
+   catch (Exception e){
+   return false;}
+
+}
 }
