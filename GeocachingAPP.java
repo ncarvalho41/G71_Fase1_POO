@@ -125,7 +125,7 @@ public class GeocachingAPP implements Serializable
     
    if(login) { 
        user = rede.getUser(usr);
-       paginaPessoalUser();
+       paginaPessoalUser(user);
    } else 
      { 
     System.out.println("\nUtilizador ou password inválidos!");
@@ -146,7 +146,7 @@ public class GeocachingAPP implements Serializable
    String pwd = "";
    System.out.println("Insira email do Admin\n");
    adm = input.lerString();
-   System.out.println("Insira password Admin\n");
+   System.out.println("Insira password Admin\n\n");
    pwd = input.lerString();
    
    boolean log = rede.validaLoginAdmin(adm, pwd);
@@ -193,7 +193,7 @@ public class GeocachingAPP implements Serializable
     User u = new User(email, pwd, nome, genero, morada, data, 0);
     
     rede.registaUser(u);
-    System.out.println("Utilizador " + nome + " criado com sucesso! Prima enter para ir para a sua página pessoal.");
+    System.out.println("Utilizador " + nome + " criado com sucesso! Prima enter para ir para a sua página pessoal.\n\n\n");
     }
     catch (Exception ex) {
     ex.printStackTrace();
@@ -203,8 +203,12 @@ public class GeocachingAPP implements Serializable
    
     //Método que permite consultar página pessoal de Utilizador normal
     
-    public static void paginaPessoalUser()
+    public static void paginaPessoalUser(User user)
     {
+    System.out.println("Utilizador " + user.getNome() + " # Página Pessoal\n\n");
+    System.out.println("1 - Consultar informação pessoal\n");
+    
+    
     
     }
    

@@ -23,7 +23,9 @@ public class Rede implements Serializable {
 /*
  * Construtores
  */   
-
+   public void setUsers(HashMap<String, User> user) {
+        this.users = user;
+    }
 /*
  * 
  */
@@ -38,7 +40,7 @@ public class Rede implements Serializable {
    //Método que permite criar novo utilizador
    
    public void registaUser(User u){
-       this.users.put(u.getEmail(), u);
+       this.users.put(u.getEmail(), u.clone());
    }
     
    //public Admin getAdmin(String email){
