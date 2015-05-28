@@ -133,7 +133,7 @@ public class GeocachingAPP implements Serializable
     int opc = input.lerInt();
     switch(opc){
     case 1: userLogin(); break;
-    case 2: carregaMenuInicial(); break;  
+    case 2: criaHomepage(); break;  
                    
     }
     
@@ -161,23 +161,44 @@ public class GeocachingAPP implements Serializable
     
     public static void criaUser(){
     
-    User u = new User();
+    String nome = "";
+    String email = "";
+    String pwd = "";
+    String genero = "";
+    String morada = "";
+    int diaN = 0;
+    int mesN = 0;
+    int anoN = 0;
+    try{
     System.out.println("Criar novo Utilizador\n\n");
     System.out.println("Introduza o seu nome: ");
-    u.setNome(input.lerString());
+    nome = input.lerString();
     System.out.println("\nIntroduza o seu email: ");
-    u.setEmail(input.lerString());
+    email = input.lerString();
     System.out.println("\nIntroduza a sua password: ");
-    u.setPw(input.lerString());
+    pwd = input.lerString();
     System.out.println("\nIntroduza o seu género: (M - Masculino, F- Feminino)");
-    u.setGenero(input.lerString());
+    genero = input.lerString();
     System.out.println("\nIntroduza a sua morada: ");
-    u.setMorada(input.lerString());
-    System.out.println("\nIntroduza a sua data de nascimento: (DD/MM/AAAA)\n\n");
-    //u.setData(input.lerString());
+    morada = input.lerString();
+    System.out.println("\nIntroduza o seu dia de nascimento:\n");
+    diaN = input.lerInt();
+    System.out.println("\nIntroduza o seu mês de nascimento:\n");
+    mesN = input.lerInt();
+    System.out.println("\nIntroduza o seu ano de nascimento:\n\n");
+    anoN = input.lerInt();
     
-    consultaInfo(u.getEmail());
-
+    GregorianCalendar data = new GregorianCalendar(anoN, mesN-1,diaN);
+    
+    User u = new User(email, pwd, nome, genero, morada, data, 0);
+    
+    rede.registaUser(u);
+    System.out.println("Utilizador " + nome + " criado com sucesso! Prima enter para ir para a sua página pessoal.");
+    }
+    catch (Exception ex) {
+    ex.printStackTrace();
+    }
+    
     }
    
     //Método que permite consultar página pessoal de Utilizador normal

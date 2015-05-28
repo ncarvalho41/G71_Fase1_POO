@@ -31,11 +31,15 @@ public class Rede implements Serializable {
    //Método que procura utiizador
 
    public boolean existeUser(String email)
-   {
+   {   
        return users.containsKey(email);
     }
    
-    //Método que devolve utilizador do tipo Admin
+   //Método que permite criar novo utilizador
+   
+   public void registaUser(User u){
+       this.users.put(u.getEmail(), u);
+   }
     
    //public Admin getAdmin(String email){
    //}

@@ -49,6 +49,18 @@ public class User
    this.amigos=amgs;
    this.pedidosAmizade=pedAmz;
    }
+   
+   public User (String mail, String pwd, String nm, String g,String mor, GregorianCalendar dt, int pts)
+   {
+        
+   this.email=mail;
+   this.pw=pwd;
+   this.nome=nm;
+   this.genero=g;
+   this.morada=mor;
+   this.data=dt;
+   this.pontos=pts;
+   }
    //Construtor copia
    
    public User (User u) {
