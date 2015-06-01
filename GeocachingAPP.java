@@ -96,6 +96,7 @@ public class GeocachingAPP implements Serializable
     catch(Exception ex) {
     ex.printStackTrace();
     System.out.println("Ficheiro inexistente. Prima Enter para retroceder\n");
+    input.lerString();
     carregaMenuInicial();
     }
     }
@@ -154,7 +155,6 @@ public class GeocachingAPP implements Serializable
     case 4 : {gravaFicheiro(); break;}
     
     case 0 :{
-        guardaAPP();
         sair = true;
         carregaMenuInicial();
         break; }
@@ -182,7 +182,7 @@ public class GeocachingAPP implements Serializable
     
    if(login) { 
        user = rede.getUser(usr);
-       paginaPessoalUser(user);
+       paginaPessoalUser();
    } else 
      { 
     System.out.println("\nUtilizador ou password inválidos!");
@@ -221,17 +221,16 @@ public class GeocachingAPP implements Serializable
    
    //Método que permite consultar página pessoal de Utilizador normal
     
-    public static void paginaPessoalUser(User user)
+    public static void paginaPessoalUser()
     {
     int log = 1;    
     while(log == 1){  
     System.out.println('\f');
     System.out.println("Utilizador " + user.getNome() + " # Página Pessoal\n\n");
     System.out.println("1 - Consultar informação pessoal\n");
-    System.out.println("2 - Consultar atividade mensal\n");
-    System.out.println("3 - Consultar lista de amigos\n");
-    System.out.println("4 - Atividades de Geocaching\n");
-    System.out.println("5 - Sair\n");
+    System.out.println("2 - Consultar lista de amigos\n");
+    System.out.println("3 - Atividades de Geocaching\n");
+    System.out.println("0 - Sair\n");
     
     int op = input.lerInt();
     
@@ -239,9 +238,13 @@ public class GeocachingAPP implements Serializable
     
     case 1 : { consultaInfo(user.getEmail()); break;}
     
-    case 3 : { paginaAmigos(); break;}
+    case 2 : { paginaAmigos(); break;}
     
-    case 5 : {log = 0;
+    case 3 : { atividades(); break;}
+    
+    case 0 : {
+             guardaAPP();
+             log = 0; 
              criaHomepage(); break;}
    }
    } 
@@ -287,9 +290,10 @@ public class GeocachingAPP implements Serializable
     u = new User(email, pwd, nome, genero, morada, dt, 0);
     
     rede.registaUser(u);
+    user = u;
     System.out.println("Utilizador " + nome + " criado com sucesso! Prima enter para ir para a sua página pessoal.\n\n\n");
     input.lerString();
-    paginaPessoalUser(u);
+    paginaPessoalUser();
     }
     
     catch (Exception ex) {
@@ -307,7 +311,7 @@ public class GeocachingAPP implements Serializable
         System.out.println(u.toString());
         System.out.println("Prima enter para retroceder\n");
         input.lerString();
-        paginaPessoalUser(u);
+        paginaPessoalUser();
         ;
     } else 
     {   System.out.println("Utilizador inexistente!");}
@@ -329,12 +333,12 @@ public class GeocachingAPP implements Serializable
    
    boolean ativo = true;    
    while(ativo){ 
-   System.out.println('f');
+   System.out.println('\f');
    System.out.println(user.getNome() + " # Página de Amigos\n\n");
    System.out.println("1 - Consultar lista de amigos\n");
    System.out.println("2 - Consultar pedidos de amizade\n");
    System.out.println("3 - Enviar pedido de amizade\n");
-   System.out.println("0 - Sair\n");
+   System.out.println("0 - Retroceder\n");
    
    int op = input.lerInt();
    
@@ -342,6 +346,16 @@ public class GeocachingAPP implements Serializable
    
    case 1 : {consultaListaAmigos(user.getEmail()); 
              break;}
+   
+   case 2 : {consultaPedidos(user.getEmail()); 
+             break;}
+             
+   case 3 : {enviaPedido(user.getEmail()); 
+             break;}
+             
+   case 0 : {paginaPessoalUser(); 
+             break;
+            }
    }
    }
    }
@@ -364,8 +378,31 @@ public class GeocachingAPP implements Serializable
    paginaAmigos();
    }
 
+   public static void consultaPedidos(String email) 
+   {
+   TreeSet<String> pedidos = new TreeSet<>(rede.getPedidos(email));
+   if(pedidos.size() == 0) {
+    System.out.println("Utilizador não tem pedidos de amizade! Prima enter para retroceder\n");
+   input.lerString();}
+   else {
+    for(String p: pedidos){
+    System.out.println(p + "\n");}
+    System.out.println("Prima enter para retroceder");
+   }
+   paginaAmigos();
+   }
    
-   
+   public static void enviaPedido(String email) {
+   System.out.println("Teste\n");
+   ArrayList<String> list = new ArrayList<>(rede.listaUsers());
+
+   {
+    for(String s: list) {
+    System.out.println(s + "\n");}
+   }
+   System.out.println("Introduza o email do utilizador que pretende adicionar:\n");
+   }
+
    /*
     *                                                                       MÉTODO DE SALVAGUARDA DA APLICAÇÃO
     */
@@ -373,7 +410,14 @@ public class GeocachingAPP implements Serializable
    //Método que permite guardar alterações na aplicação
    
    public static void guardaAPP(){
-    
+   System.out.println('\f');
+   System.out.println("Pretende guardar as alterações efetuadas? (1 - Sim, 0 - Não)\n");
+   int op = input.lerInt();
+   
+   if (op == 1) {
+   gravaFicheiro();}
+   
+   
    }
     
     

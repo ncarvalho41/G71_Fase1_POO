@@ -34,14 +34,20 @@ public class Rede implements Serializable {
  */
 
    //Método que procura utiizador
-
    public boolean existeUser(String email)
    {   
        return users.containsKey(email);
     }
    
+    
+   //Método que devolve lista de amigos de um utilizador 
    public TreeSet<String> getAmigos(String email) {
    return users.get(email).getAmigos();
+    }
+    
+   //Método que devolve pedidos de amizade de um utilizador
+   public TreeSet<String> getPedidos(String email) {
+   return users.get(email).getPedidos(); 
     }
    //Método que permite criar novo utilizador
    
@@ -78,8 +84,14 @@ public class Rede implements Serializable {
     }
     }
     
-    
-    
+   public ArrayList<String> listaUsers() {
+   ArrayList <String> res = new ArrayList<>();
+   User u;
+   for(String e: users.keySet()){
+    u = users.get(e);
+    res.add(u.getEmail());}
+   return res;
+   }
     
     
     

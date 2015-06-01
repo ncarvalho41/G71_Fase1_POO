@@ -64,7 +64,7 @@ public class User implements Serializable
    this.genero= u.getGenero();
    this.pontos=u.getPontos();
    this.amigos=u.getAmigos();
-   this.pedidosAmizade=u.getPedidosAmizade();
+   this.pedidosAmizade=u.getPedidos();
 
     }
    
@@ -94,7 +94,7 @@ public class User implements Serializable
    public TreeSet<String> getAmigos() {
    return this.amigos;
     }
-   public TreeSet<String> getPedidosAmizade() {
+   public TreeSet<String> getPedidos() {
    return this.pedidosAmizade;}
     
    //SETS
@@ -122,7 +122,7 @@ public class User implements Serializable
    public void setAmigos(TreeSet<String> a) {
    this.amigos = a;
    }
-   public void setPedidosAmizade(TreeSet<String> pedA) {
+   public void setPedidos(TreeSet<String> pedA) {
    this.pedidosAmizade = pedA;
    }
     
