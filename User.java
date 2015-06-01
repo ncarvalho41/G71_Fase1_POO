@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.TreeSet;
 
-public class User
+public class User implements Serializable
 {
    private String email;
    private String pw;
@@ -33,22 +33,10 @@ public class User
    this.morada="";
    this.data= new GregorianCalendar();
    this.pontos=0; 
+   this.amigos = new TreeSet<String>();
+   this.pedidosAmizade = new TreeSet<String>();
    }
    //Construtor parametro
-   
-   public User (String mail, String pwd, String nm, String g,String mor, GregorianCalendar dt, int pts, TreeSet amgs, TreeSet pedAmz)
-   {
-        
-   this.email=mail;
-   this.pw=pwd;
-   this.nome=nm;
-   this.genero=g;
-   this.morada=mor;
-   this.data=dt;
-   this.pontos=pts;
-   this.amigos=amgs;
-   this.pedidosAmizade=pedAmz;
-   }
    
    public User (String mail, String pwd, String nm, String g,String mor, GregorianCalendar dt, int pts)
    {
@@ -60,7 +48,11 @@ public class User
    this.morada=mor;
    this.data=dt;
    this.pontos=pts;
+   this.amigos= new TreeSet<String>();
+   this.pedidosAmizade=new TreeSet<String>();
    }
+   
+  
    //Construtor copia
    
    public User (User u) {
@@ -139,14 +131,14 @@ public class User
     * Metodos
     */
    
-   public String consultaInfo(){
+   public String toString(){
    StringBuilder s = new StringBuilder();
   
-   s.append(nome + "Informação Pessoal");
-   s.append("Nome:" + nome);
-   s.append("E-mail:" + email);
-   s.append("Morada:" + morada);
-   s.append("Data de Nascimento:" + data);
+   s.append(nome + " Informação Pessoal\n");
+   s.append("Nome:" + nome + "\n");
+   s.append("E-mail:" + email + "\n");
+   s.append("Morada:" + morada + "\n");
+   s.append("Data de Nascimento: " + data.get(Calendar.YEAR) + "/" + (data.get(Calendar.MONTH) + 1) + "/" + data.get(Calendar.DAY_OF_MONTH) + "\n");
    
    return s.toString();
 }
@@ -175,17 +167,16 @@ public class User
    System.out.println(pa + "\n");}}
    }
    
-   //Método que exibe a lista de amigos de um utilizador
-   public void getListaAmigos() 
-   {
-   for (String s: amigos)
-  {
-   System.out.println(s);}
- }
-
+   //Método que permite adicionar amigos à lista
+   
+   public void pedidoAmigo(String email) {
+   
+   pedidosAmizade.add(email);
+   
+   }
    
 
-    //Método Clone
+   //Método Clone
     
     public User clone(){
     return new User(this);

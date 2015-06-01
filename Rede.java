@@ -18,14 +18,17 @@ public class Rede implements Serializable {
     
    private HashMap<String, User> users;
    private Admin admin;
+   private User u;
    
-
+   
 /*
  * Construtores
  */   
-   public void setUsers(HashMap<String, User> user) {
-        this.users = user;
-    }
+   public Rede(){
+       this.users = new HashMap<>();
+       this.admin = new Admin();
+        }
+        
 /*
  * 
  */
@@ -37,15 +40,15 @@ public class Rede implements Serializable {
        return users.containsKey(email);
     }
    
+   public TreeSet<String> getAmigos(String email) {
+   return users.get(email).getAmigos();
+    }
    //Método que permite criar novo utilizador
    
    public void registaUser(User u){
-       this.users.put(u.getEmail(), u.clone());
+       this.users.put(u.getEmail(), u);
    }
     
-   //public Admin getAdmin(String email){
-   //}
-   
    
    //Método que devolve utilizador
    public User getUser(String email)

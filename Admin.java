@@ -1,12 +1,13 @@
 import java.util.*;
+import java.io.Serializable;
 
-public class Admin extends User
+public class Admin extends User implements Serializable
 {
    
         
-        private String nome;
-        private String email;
-        private String pw;
+        private String nome = "admin";
+        private String email = "admin";
+        private String pw = "admin";
         private boolean admin;
         
         /*
@@ -57,8 +58,7 @@ public class Admin extends User
         public void setPw(String p){
         this.pw = p;
     }
-        
-        
+          
         
         
         
