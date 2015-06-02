@@ -175,6 +175,10 @@ public class User implements Serializable
    
    }
    
+   public void confirmaAmigo(String email) {
+   pedidosAmizade.remove(email);
+   amigos.add(email);
+    }
 
    //Método Clone
     

@@ -19,7 +19,8 @@ public class Rede implements Serializable {
    private HashMap<String, User> users;
    private Admin admin;
    private User u;
-   
+   private HashMap<String, Caches> caches;
+  
    
 /*
  * Construtores
@@ -27,6 +28,8 @@ public class Rede implements Serializable {
    public Rede(){
        this.users = new HashMap<>();
        this.admin = new Admin();
+       this.caches = new HashMap<>();
+       System.out.println("Criei rede");
         }
         
 /*
@@ -54,7 +57,10 @@ public class Rede implements Serializable {
    public void registaUser(User u){
        this.users.put(u.getEmail(), u);
    }
-    
+   
+   public void registaMicroCache(String codCache, String criador, GregorianCalendar data, String desc_x, Coordenadas coord){
+       MicroCache c = new MicroCache(codCache, criador, data, desc_x, coord);
+       this.caches.put(codCache, c);}
    
    //Método que devolve utilizador
    public User getUser(String email)

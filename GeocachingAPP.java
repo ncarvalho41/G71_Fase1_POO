@@ -22,7 +22,7 @@ public class GeocachingAPP implements Serializable
         private static Input input;
         private static Admin admin;
         private static Rede rede;
-
+        private static Caches cache;
         
     public static void main(){
     init();
@@ -240,7 +240,7 @@ public class GeocachingAPP implements Serializable
     
     case 2 : { paginaAmigos(); break;}
     
-    case 3 : { atividades(); break;}
+    case 3 : { menuAtividades(); break;}
     
     case 0 : {
              guardaAPP();
@@ -306,10 +306,20 @@ public class GeocachingAPP implements Serializable
 
     public static void consultaInfo(String email){
     if (rede.existeUser(email))
-        {
+        {    
         User u = rede.getUser(email);
         System.out.println(u.toString());
-        System.out.println("Prima enter para retroceder\n");
+        System.out.println("\n\n1 - Atualizar informação pessoal\n");
+        System.out.println("0 - Retroceder");
+        
+        int op = input.lerInt();
+        
+        switch(op) {
+        case 1 :{ atualizaInfo(); break;
+        }
+        
+        case 0 : {paginaPessoalUser(); break;}
+    }
         input.lerString();
         paginaPessoalUser();
         ;
@@ -317,6 +327,46 @@ public class GeocachingAPP implements Serializable
     {   System.out.println("Utilizador inexistente!");}
     }  
     
+   public static void atualizaInfo(){
+   
+   User a = user;
+   
+   String nome = "";
+   String email = "";
+   String pwd = "";
+   String gnr = "";
+   String mord = "";
+   int diaN = 0;
+   int mesN = 0;
+   int anoN = 0;
+    
+   System.out.println(user.getNome() + " # Editar dados pessoais\n\n");
+   System.out.println("Alterar Nome:\n");
+   nome = input.lerString();
+   System.out.println("Alterar e-mail:\n");
+   email = input.lerString();
+   System.out.println("Alterar password:\n");
+   pwd = input.lerString();
+   System.out.println("Alterar género:\n");
+   gnr = input.lerString();
+   System.out.println("Alterar morada:\n");
+   mord = input.lerString();
+   System.out.println("\nIntroduza o seu dia de nascimento:\n");
+   diaN = input.lerInt();
+   System.out.println("\nIntroduza o seu mês de nascimento:\n");
+   mesN = input.lerInt();
+   System.out.println("\nIntroduza o seu ano de nascimento:\n\n");
+   anoN = input.lerInt();
+   
+   GregorianCalendar new_data = new GregorianCalendar(anoN, mesN-1, diaN);
+   
+
+   a.setEmail(email);
+   
+   
+    
+   
+    }
     
    //Método que cria página de administração da APP
    
@@ -324,7 +374,7 @@ public class GeocachingAPP implements Serializable
    System.out.println("Admin");
    }
    /*
-    *                                                                    MÉTODOS DE GESTÃO DE AMIGOS DE UM UTILIZADOR
+    *                                                       MÉTODOS DE GESTÃO DE AMIGOS DE UM UTILIZADOR
     */
    
    //Método que cria página de amigos de um utilizador
@@ -350,7 +400,7 @@ public class GeocachingAPP implements Serializable
    case 2 : {consultaPedidos(user.getEmail()); 
              break;}
              
-   case 3 : {enviaPedido(user.getEmail()); 
+   case 3 : {enviaPedido(); 
              break;}
              
    case 0 : {paginaPessoalUser(); 
@@ -363,48 +413,185 @@ public class GeocachingAPP implements Serializable
    //Método que permite consultar amigos de um utilizador
    public static void consultaListaAmigos(String email)
     {
-    TreeSet<String> amigos = new TreeSet<>(rede.getAmigos(email));
-    
-    if(amigos.size() == 0) {
-    System.out.println("Utilizador ainda não tem amigos! Prima enter para retroceder\n");
-    input.lerString();
-    }
-    else{
-    for (String s: amigos) {
-    System.out.println(s + "\n");
-    System.out.println("Prima enter para retroceder");
-    }
-   }
+   user.consultaAmigos(user.getEmail());
+   System.out.println("Prima enter para retroceder");
+   input.lerString();
    paginaAmigos();
    }
-
+   
    public static void consultaPedidos(String email) 
    {
-   TreeSet<String> pedidos = new TreeSet<>(rede.getPedidos(email));
-   if(pedidos.size() == 0) {
-    System.out.println("Utilizador não tem pedidos de amizade! Prima enter para retroceder\n");
-   input.lerString();}
-   else {
-    for(String p: pedidos){
-    System.out.println(p + "\n");}
-    System.out.println("Prima enter para retroceder");
+   int flag = 1;
+   user.consultaPedidosAmizade(email);
+   input.lerString();
+   while(flag == 1){
+   System.out.println("Introduza o email de um pedido que pretenda confirmar. Prima enter para continuar");
+   String mail = input.lerString();
+   if(email.length() > 1) {user.confirmaAmigo(mail);
+                           System.out.println("Inseri");
+                        if(user.getPedidos().size() == 0) flag = 0;}
+   else {flag = 0;}
    }
    paginaAmigos();
    }
    
-   public static void enviaPedido(String email) {
-   System.out.println("Teste\n");
+   public static void enviaPedido() {
    ArrayList<String> list = new ArrayList<>(rede.listaUsers());
-
    {
     for(String s: list) {
     System.out.println(s + "\n");}
    }
    System.out.println("Introduza o email do utilizador que pretende adicionar:\n");
+   String email = input.lerString();
+   user.pedidoAmigo(email);
+   
    }
-
+   
+   
    /*
-    *                                                                       MÉTODO DE SALVAGUARDA DA APLICAÇÃO
+    *                                                        MÉTODOS DE GESTÃO DE ATIVIDADE DE GEOCACHING
+    */
+   
+   //Método que cria menu inicial de atividades de um utilizador
+   
+   public static void menuAtividades()
+   {
+   int ativo = 1;
+   
+   while(ativo == 1) {
+   System.out.println('\f');
+   System.out.println(user.getNome() + " # Atividades de Geocaching\n\n");
+   //System.out.println("1 - Consultar atividade recente\n");
+   System.out.println("2 - Inserir nova cache\n");
+   //System.out.println("3 - Registar descoberta de cache\n");
+   //System.out.println("4 - Eliminar cache\n");
+   //System.out.println("5 - Fazer <<report abuse>> de cache\n");
+   System.out.println("0 - Voltar para o menu inicial\n");
+   
+   int op = input.lerInt();
+   
+   switch(op){
+   //case 1 : {consultaAtividades(); break;}
+   case 2 : {insereCache(); break;}
+   //case 3 : {descobreCache(); break;}
+   //case 4 : {eliminaCache(); break;}
+   //case 5 : {reportCache(); break;}
+   case 0 : {
+            ativo = 0;
+            paginaPessoalUser(); break;}
+   }
+   
+   }
+   }
+   
+   public static void insereCache(){
+   System.out.println(user.getNome() + " # Inserir cache\n\n");
+   System.out.println("1 - Inserir micro-cache\n");
+   System.out.println("2 - Inserir multi-cache\n");
+   System.out.println("3 - Inserir cache-mistério\n");
+   System.out.println("0 - Voltar ao menu anterior\n");
+   
+   int op = input.lerInt();
+   
+   if(op!=2){
+   switch(op){
+   case 1 : {insereMicroC();}
+   case 0 : {menuAtividades();}
+   }
+   }
+   
+   
+    }
+    
+   public static void insereMicroC(){
+    
+    String codCache = "";
+    int diaM = 0;
+    int mes = 0;
+    int ano = 0;
+    String desc_x = "";
+    
+    
+    try{
+    System.out.println('\f');
+    System.out.println(user.getNome() + " # Inserir Micro-cache\n\n");
+    System.out.println("Inserir código da cache:\n");
+    codCache = input.lerString();
+    System.out.println("Inserir dia:\n");
+    diaM = input.lerInt();
+    System.out.println("Inserir mes:\n");
+    mes = input.lerInt();
+    System.out.println("Inserir ano:\n");
+    ano = input.lerInt();
+    System.out.println("Inserir descrição extra:n");
+    desc_x = input.lerString();
+    
+    GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+    
+    Coordenadas cor = getCoordenadas();
+    
+    rede.registaMicroCache(codCache, user.getEmail(), data, desc_x, cor);
+    
+    System.out.println("Micro-cache " + codCache + " criada com sucesso. Prima enter para continuar\n");
+    input.lerString();
+    }
+    catch (Exception ex) 
+    {
+    ex.printStackTrace();
+    System.out.println("Erro na criação da cache. Prima enter para voltar a tentar");
+    input.lerString();
+    insereCache();
+    }
+    
+   
+    }
+   
+   public static Coordenadas getCoordenadas()
+   {
+   Coordenadas cor = new Coordenadas();
+   
+   int minLt = 0;
+   int segLt = 0;
+   int grauLt = 0;
+   String dirLt = "";
+   
+   System.out.println("Inserir coordenadas latitude\n");
+   System.out.println("Inserir grau latitude:\n");
+   grauLt = input.lerInt();
+   System.out.println("Inserir minuto latitude:\n");
+   minLt = input.lerInt();
+   System.out.println("Inserir segundo latitude:\n");
+   segLt = input.lerInt();
+   System.out.println("Inserir direção latitude:\n\n");
+   dirLt = input.lerString();
+   
+   Coord lat = new Coord (grauLt, minLt, segLt, dirLt);
+   
+   int minLg = 0;
+   int segLg = 0;
+   int grauLg = 0;
+   String dirLg = "";
+   
+   System.out.println("Inserir coordenadas logitude\n");
+   System.out.println("Inserir grau longitude:\n");
+   grauLg = input.lerInt();
+   System.out.println("Inserir minuto longitude:\n");
+   minLg = input.lerInt();
+   System.out.println("Inserir segundo longitude:\n");
+   segLg = input.lerInt();
+   System.out.println("Inserir direção longitude:\n");
+   dirLg = input.lerString();
+   
+   Coord lng = new Coord (grauLg, minLg, segLg, dirLg);
+   
+   cor.setLat(lat);
+   cor.setLongt(lng);
+   
+   return cor;
+  }
+    
+   /*
+    *                                                            MÉTODO DE SALVAGUARDA DA APLICAÇÃO
     */
    
    //Método que permite guardar alterações na aplicação

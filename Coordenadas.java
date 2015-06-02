@@ -16,8 +16,8 @@ public class Coordenadas implements Serializable
     
     public Coordenadas()
     {
-    this.latitude = null;
-    this.longitude = null;
+        latitude = new Coord();
+        longitude = new Coord();
     }
     //Construtor Parametros
     
