@@ -21,6 +21,7 @@ public class Rede implements Serializable {
    private User u;
    private HashMap<String, Caches> caches;
    private HashMap<String, Caches> cachesDescobertas;
+   private Input input;
   
    
 /*
@@ -91,18 +92,51 @@ public class Rede implements Serializable {
     Caches c = caches.get(codCache);
    if (c instanceof MultiCache) {
     return true;} else return false;}
+    
+   public boolean isMistery(String codCache){
+    Caches c = caches.get(codCache);
+    if (c instanceof CacheMisterio){
+    return true;} else return false;}
    
    public void descobreMicroCache(String codCache, GregorianCalendar data, String criador, String desc_x){
        Coordenadas coor = caches.get(codCache).getCoord();
        MicroCache mcd = new MicroCache(codCache, criador, data, desc_x, coor);
        this.cachesDescobertas.put(codCache, mcd);
    }
-   
+
    public void descobreMultiCache(String codCache, GregorianCalendar data, String criador, String desc_x) {
-    ArrayList<Coordenadas> coor = caches.get(codCache).getCoordenadas();
-    String obj = caches.get(codCache).getObj();
-    MultiCache mcd = new MultiCache(codCache, criador, data, desc_x, coor);
+    ArrayList<Coordenadas> coor ;
+	MultiCache mc = (MultiCache) caches.get(codCache);
+	coor = new ArrayList<>(mc.getCoordenadas());
+    String obj = mc.getObj();
+    MultiCache mcd = new MultiCache(coor, obj, codCache, criador, data, desc_x, null);
+    this.cachesDescobertas.put(codCache, mcd);
     }
+    
+   public boolean adivinhaCache(String codCache){
+   String adP = "";
+   CacheMisterio cm = (CacheMisterio) caches.get(codCache);
+   adP = cm.getAdP();
+   
+   System.out.println(adP);
+   System.out.println("Resposta: \n");
+   String resp = input.lerString();
+   
+   if (cm.getAdR().equals(resp)) {
+    return true;} else return false;
+   } 
+   
+   public void descobreMisteryCache(String codCache, GregorianCalendar data, String criador, String desc_x) {
+   CacheMisterio cm = (CacheMisterio) caches.get(codCache);
+   Coordenadas coord = cm.getCoord();
+   String obj = cm.getObj();
+   String adP = cm.getAdP();
+   String adR = cm.getAdR();
+   CacheMisterio mc = new CacheMisterio(adP, adR, obj, codCache, criador, data, desc_x, coord);
+   this.cachesDescobertas.put(codCache, mc);
+   }
+    
+   
    //Método que valida login do utilizador
    
    public boolean validaLogin(String usr, String pwd){
@@ -112,7 +146,7 @@ public class Rede implements Serializable {
    } 
    catch (Exception e){
    return false;}
-
+   
   }
 
     public boolean validaLoginAdmin(String adm, String pwd){

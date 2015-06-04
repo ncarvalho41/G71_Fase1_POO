@@ -497,8 +497,22 @@ public class GeocachingAPP implements Serializable
    System.out.println("2 - Consultar atividades de amigos\n");
    System.out.println("0 - Voltar ao menu anterior\n");
    
+   int op = input.lerInt();
+   
+   switch(op){
+   case 1 : {consultaAtividadesPessoais(); break;}
+   case 2 : {consultaAtividadesAmigos(); break;}
+   case 3 : {menuAtividades(); break;}
+   }
    
     }
+   
+   public static void consultaAtividadesPessoais(){
+   System.out.println('\f');
+   System.out.println(user.getNome() + " # Atividades recentes\n\n");
+   
+   }
+    
     
    
    public static void insereCache(){
@@ -698,6 +712,8 @@ public class GeocachingAPP implements Serializable
     
     switch(op){
     case 1 : {descobreMicroC(); break;}
+    case 2 : {descobreMultiC(); break;}
+    case 3 : {descobreCacheMist(); break;}
     case 0 : {menuAtividades(); break;}
     
     }
@@ -774,9 +790,50 @@ public class GeocachingAPP implements Serializable
    System.out.println("Multi-cache descoberta com sucesso. Prima enter para continuar.\n");
    input.lerString();
    
-    }
+    } else {
+    System.out.println("Cache inserida não é uma Multi-cache. Prima enter para retroceder.\n");
+    input.lerString();
+    descobreCache();}
   }
     
+ 
+  public static void descobreCacheMist(){
+  
+  String codCache = "";
+  int diaM = 0;
+  int mes = 0;
+  int ano = 0;
+  String desc_x = "";
+  
+  System.out.println('\f');
+  System.out.println(user.getNome() + " # Descoberta de Cache-mistério\n\n");
+  System.out.println("Insira código da cache descoberta:\n");
+  codCache = input.lerString();
+  if(rede.isMistery(codCache)){
+   if(rede.adivinhaCache(codCache)){
+   System.out.println("Enigma solucionado.\n");   
+   System.out.println("Insira o dia de hoje:\n");
+   diaM = input.lerInt();
+   System.out.println("Insira o mês atual:\n");
+   mes = input.lerInt();
+   System.out.println("Insira o ano:\n");
+   ano = input.lerInt();
+   System.out.println("Insira uma descrição adicional:\n");
+   desc_x = input.lerString();}
+   else {
+   System.out.println("Solução errada. Prima enter para voltar a tentar.\n");
+   input.lerString();
+   descobreCache();}
+  }
+  
+  GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+  rede.descobreMisteryCache(codCache, data, user.getEmail(), desc_x);
+  System.out.println("Cache-mistério descoberta com sucesso. Prima enter para continuar.\n");
+  input.lerString();
+  descobreCache();
+  }
+  
+  
    public static Coordenadas getCoordenadas()
    {
    Coordenadas cor = new Coordenadas();
