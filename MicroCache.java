@@ -26,4 +26,12 @@ public class MicroCache extends Caches
     super(mc.getCodigo(), mc.getCriador(), mc.getData(), mc.getDesc(), mc.getCoord());
     
 }
+
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        s.append("\nNome: " + this.getCodigo());
+        s.append("\nDescrição: " + this.getDesc());
+        return s.toString();
+    }
 }
+

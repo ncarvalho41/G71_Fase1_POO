@@ -461,21 +461,24 @@ public class GeocachingAPP implements Serializable
    while(ativo == 1) {
    System.out.println('\f');
    System.out.println(user.getNome() + " # Atividades de Geocaching\n\n");
-   //System.out.println("1 - Consultar atividade recente\n");
+   System.out.println("1 - Consultar atividade recente\n");
    System.out.println("2 - Inserir nova cache\n");
-   //System.out.println("3 - Registar descoberta de cache\n");
+   System.out.println("3 - Registar descoberta de cache\n");
    //System.out.println("4 - Eliminar cache\n");
    //System.out.println("5 - Fazer <<report abuse>> de cache\n");
+   System.out.println("6 - Consultar caches existentes\n");
    System.out.println("0 - Voltar para o menu inicial\n");
    
    int op = input.lerInt();
    
    switch(op){
-   //case 1 : {consultaAtividades(); break;}
+   case 1 : {consultaAtividades(); break;}
    case 2 : {insereCache(); break;}
-   //case 3 : {descobreCache(); break;}
+   case 3 : {descobreCache(); break;}
    //case 4 : {eliminaCache(); break;}
    //case 5 : {reportCache(); break;}
+   
+   case 6 : {consultaCaches(); break;}
    case 0 : {
             ativo = 0;
             paginaPessoalUser(); break;}
@@ -484,7 +487,22 @@ public class GeocachingAPP implements Serializable
    }
    }
    
+   
+   
+   
+   public static void consultaAtividades(){
+   System.out.println('\f');
+   System.out.println(user.getNome() + " # Atividades de Geocaching\n\n");
+   System.out.println("1 - Consultar atividades pessoais\n");
+   System.out.println("2 - Consultar atividades de amigos\n");
+   System.out.println("0 - Voltar ao menu anterior\n");
+   
+   
+    }
+    
+   
    public static void insereCache(){
+   System.out.println('\f');
    System.out.println(user.getNome() + " # Inserir cache\n\n");
    System.out.println("1 - Inserir micro-cache\n");
    System.out.println("2 - Inserir multi-cache\n");
@@ -493,15 +511,20 @@ public class GeocachingAPP implements Serializable
    
    int op = input.lerInt();
    
-   if(op!=2){
+
    switch(op){
-   case 1 : {insereMicroC();}
-   case 0 : {menuAtividades();}
-   }
+   case 1 : {insereMicroC(); break;}
+   
+   case 2 : {insereMultiC(); break;}
+   
+   case 3 : {insereCacheM(); break;}
+   
+   case 0 : {menuAtividades(); break;}
+}
    }
    
-   
-    }
+
+    
     
    public static void insereMicroC(){
     
@@ -523,7 +546,7 @@ public class GeocachingAPP implements Serializable
     mes = input.lerInt();
     System.out.println("Inserir ano:\n");
     ano = input.lerInt();
-    System.out.println("Inserir descrição extra:n");
+    System.out.println("Inserir descrição extra:\n");
     desc_x = input.lerString();
     
     GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
@@ -545,7 +568,215 @@ public class GeocachingAPP implements Serializable
     
    
     }
+    
+    public static void insereMultiC(){
+    
+    String codCache = "";
+    String desc_x = "";
+    int diaM = 0;
+    int mes = 0;
+    int ano = 0;
+    String obj = "";
+    
+    
+    int nCaches = 0;
+    int i = 0;
+    try{
+    System.out.println('\f');
+    System.out.println(user.getNome() + " # Inserir Multi-cache\n\n");
+    System.out.println("Indique o número de locais que terá a Multi-cache:\n");
+    nCaches = input.lerInt();
+    Coordenadas coordends = null;
+    ArrayList<Coordenadas> listCaches = new ArrayList<>();
+    for (i=0;i<nCaches;i++) {
+    System.out.println('\f');
+    System.out.println("Localização " + (i+1));
+    coordends = getCoordenadas();
+    listCaches.add(coordends);
+    }
+    System.out.println('\f');
+    System.out.println("Coordendas inseridas. Prima enter para continuar\n");
+    input.lerString();
+    System.out.println("Insira o código da multi-cache criada:\n");
+    codCache = input.lerString();
+    System.out.println("Qual o objeto que colocará na cache?\n");
+    obj = input.lerString();
+    System.out.println("Insira a descrição extra da cache:\n");
+    desc_x = input.lerString();
+    System.out.println("Dia:\n");
+    diaM = input.lerInt();
+    System.out.println("Mês:\n");
+    mes = input.lerInt();
+    System.out.println("Ano:\n");
+    ano = input.lerInt();
+    
+    Coordenadas last = listCaches.get(listCaches.size() -1);
+    
+    GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+    
+    rede.registaMultiCache(codCache, user.getEmail(), data, desc_x, last, obj, listCaches);
+    
+    System.out.println("Multi-cache " + codCache + " criada com sucesso. Prima enter para continuar\n");
+    input.lerString();
+    }
+    catch(Exception ex) {
+    ex.printStackTrace();
+    System.out.println("Erro a criar cache. Prima enter para voltar a tentar.\n");
+    insereCache();
+    }
+    }
+    
+    public static void insereCacheM(){
+    
+    String codCache = "";
+    String desc_x = "";
+    int diaM = 0;
+    int mes = 0;
+    int ano = 0;
+    String obj = "";
+    String adivinhaP = "";
+    String adivinhaR = "";
+        
+    try {System.out.println('\f');
+    System.out.println(user.getNome() + " # Inserir Cache-Mistério\n\n");
+    System.out.println("Inserir código de cache:\n");
+    codCache = input.lerString();
+    System.out.println("Qual o objeto que colocará na cache?\n");
+    obj = input.lerString();
+    System.out.println("Indique o enigma a colocar na cache:\n");
+    adivinhaP = input.lerString();
+    System.out.println("Indique a solução para o enigma:\n");
+    adivinhaR = input.lerString();
+    System.out.println("Indique uma descrição extra para colocar na cache:\n");
+    desc_x = input.lerString();
+    System.out.println("Dia:\n");
+    diaM = input.lerInt();
+    System.out.println("Mês:\n");
+    mes = input.lerInt();
+    System.out.println("Ano:\n");
+    ano = input.lerInt();
+    
+    GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+    
+    Coordenadas cor = getCoordenadas();
+    
+    rede.registaCacheMist(codCache, user.getEmail(), data, desc_x, cor, obj, adivinhaP, adivinhaR);
+    
+    System.out.println("Cache-mistério " + codCache + " criada com sucesso. Prima ok para continuar.");
+    input.lerString();
+    insereCache();}
+    
+    catch(Exception ex){
+    ex.printStackTrace();
+    System.out.println("Erro no registo de cache. Prima enter para continuar.\n");
+    input.lerString();
+    insereCache();}
+    
+    }
+    
+    public static void consultaCaches() {
+        HashMap<String, Caches> caches = new HashMap<>(rede.getCaches());
+        Caches c;
+        for(String codigo: caches.keySet()) {
+        c = caches.get(codigo);
+        System.out.println(c.toString());
+        }
+        System.out.println("Prima enter para retroceder\n");
+        input.lerString();
+    }
+    
+    public static void descobreCache(){
+        
+    System.out.println('\f');
+    System.out.println(user.getNome() + " # Descoberta de cache\n\n");
+    System.out.println("1 - Micro-cache\n");
+    System.out.println("2 - Multi-cache\n");
+    System.out.println("3 - Cache-Mistério\n");
+    System.out.println("0 - Voltar a menu anterior\n");
+    
+    int op = input.lerInt();
+    
+    switch(op){
+    case 1 : {descobreMicroC(); break;}
+    case 0 : {menuAtividades(); break;}
+    
+    }
+    
+    
+    }
+    
+  public static void descobreMicroC() {
+  
+     
+  
+  String codCache = "";    
+  int diaM = 0;
+  int mes = 0;
+  int ano = 0;
+  String desc_x = "";
+  
+  
+  System.out.println('\f');
+  System.out.println(user.getNome() + " # Descoberta de Micro-cache\n\n");
+  System.out.println("Insira código da cache descoberta:\n");
+  codCache = input.lerString();
+  if(rede.isMicro(codCache)) {
+   System.out.println("Insira o dia de hoje:\n");
+   diaM = input.lerInt();
+   System.out.println("Insira o mês atual:\n");
+   mes = input.lerInt();
+   System.out.println("Insira o ano:\n");
+   ano = input.lerInt();
+   System.out.println("Insira uma descrição adicional:\n");
+   desc_x = input.lerString();
    
+   GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+   
+   rede.descobreMicroCache(codCache, data, user.getEmail(), desc_x);
+   System.out.println("Micro-cache " + codCache + " descoberta com sucesso. Prima enter para continuar.\n");
+   input.lerString();
+   descobreCache();
+    } else {
+    System.out.println("Código de cache inserido não pertence a uma micro-cache. Prima enter para voltar a tentar.\n");
+    input.lerString();
+    descobreCache();
+    }
+  
+  }
+  
+  public static void descobreMultiC(){
+    
+  String codCache = "";    
+  int diaM = 0;
+  int mes = 0;
+  int ano = 0;
+  String desc_x = "";
+  
+  
+  
+  System.out.println('\f');
+  System.out.println(user.getNome() + " # Descoberta de Multi-cache\n\n");
+  System.out.println("Insira código da cache descoberta:\n");
+  codCache = input.lerString();
+  if(rede.isMulti(codCache)){
+   System.out.println("Insira o dia de hoje:\n");
+   diaM = input.lerInt();
+   System.out.println("Insira o mês atual:\n");
+   mes = input.lerInt();
+   System.out.println("Insira o ano:\n");
+   ano = input.lerInt();
+   System.out.println("Insira uma descrição adicional:\n");
+   desc_x = input.lerString();
+   
+   
+   GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
+   rede.descobreMultiCache(codCache, data, user.getEmail(), desc_x);
+   System.out.println("Multi-cache descoberta com sucesso. Prima enter para continuar.\n");
+   input.lerString();
+   
+    }
+  }
+    
    public static Coordenadas getCoordenadas()
    {
    Coordenadas cor = new Coordenadas();

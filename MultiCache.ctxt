@@ -1,8 +1,20 @@
 #BlueJ class context
 comment0.params=
 comment0.target=MultiCache()
-comment0.text=\n\ COnstrutor\ para\ objetos\ da\ classe\ MultiCache\n
-comment1.params=y
-comment1.target=int\ sampleMethod(int)
-comment1.text=\n\ Exemplo\ de\ m\u00E9todo\ -\ substitua\ este\ coment\u00E1rio\ pelo\ seu\ pr\u00F3prio\n\ \n\ @param\ \ y\ \ \ exemplo\ de\ um\ par\u00E2metro\ de\ m\u00E9todo\n\ @return\ \ \ \ \ a\ soma\ de\ x\ com\ y\ \n
-numComments=2
+comment0.text=\n\ Construtores\ \n
+comment1.params=coords\ objt\ codigo\ criador\ data\ descricao_extra\ coordenadas
+comment1.target=MultiCache(java.util.ArrayList,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.util.GregorianCalendar,\ java.lang.String,\ Coordenadas)
+comment2.params=mc
+comment2.target=MultiCache(MultiCache)
+comment3.params=
+comment3.target=java.util.ArrayList\ getCoordenadas()
+comment4.params=
+comment4.target=java.lang.String\ getObj()
+comment5.params=coords
+comment5.target=void\ setCoord(java.util.ArrayList)
+comment6.params=objt
+comment6.target=void\ setObj(java.lang.String)
+comment7.params=
+comment7.target=java.lang.String\ toString()
+comment7.text=\n\ M\u00E9todos\n
+numComments=8

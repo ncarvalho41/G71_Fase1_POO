@@ -20,6 +20,7 @@ public class Rede implements Serializable {
    private Admin admin;
    private User u;
    private HashMap<String, Caches> caches;
+   private HashMap<String, Caches> cachesDescobertas;
   
    
 /*
@@ -29,8 +30,8 @@ public class Rede implements Serializable {
        this.users = new HashMap<>();
        this.admin = new Admin();
        this.caches = new HashMap<>();
-       System.out.println("Criei rede");
-        }
+       this.cachesDescobertas = new HashMap<>();
+   }
         
 /*
  * 
@@ -61,13 +62,47 @@ public class Rede implements Serializable {
    public void registaMicroCache(String codCache, String criador, GregorianCalendar data, String desc_x, Coordenadas coord){
        MicroCache c = new MicroCache(codCache, criador, data, desc_x, coord);
        this.caches.put(codCache, c);}
+       
+   public void registaMultiCache(String codCache, String criador, GregorianCalendar data, String desc_x, Coordenadas coord , String obj, ArrayList<Coordenadas> cor){
+    MultiCache mc = new MultiCache(cor, obj, codCache, criador, data, desc_x, coord);
+    this.caches.put(codCache, mc);
+    }
    
+   public void registaCacheMist(String codCache, String criador, GregorianCalendar data, String desc_x, Coordenadas coord , String obj, String adP, String adR) {
+    CacheMisterio cm = new CacheMisterio(obj, adP, adR, codCache, criador, data, desc_x, coord);
+    this.caches.put(codCache, cm);
+    }
    //Método que devolve utilizador
    public User getUser(String email)
    {
        return users.get(email).clone();
     }
+    
+  public HashMap<String, Caches> getCaches(){
+    return this.caches;}
+    
+  public boolean isMicro(String codCache){
+   Caches c = caches.get(codCache);
+    if (c instanceof MicroCache) {
+    return true;} else return false;
+   }  
    
+   public boolean isMulti(String codCache){
+    Caches c = caches.get(codCache);
+   if (c instanceof MultiCache) {
+    return true;} else return false;}
+   
+   public void descobreMicroCache(String codCache, GregorianCalendar data, String criador, String desc_x){
+       Coordenadas coor = caches.get(codCache).getCoord();
+       MicroCache mcd = new MicroCache(codCache, criador, data, desc_x, coor);
+       this.cachesDescobertas.put(codCache, mcd);
+   }
+   
+   public void descobreMultiCache(String codCache, GregorianCalendar data, String criador, String desc_x) {
+    ArrayList<Coordenadas> coor = caches.get(codCache).getCoordenadas();
+    String obj = caches.get(codCache).getObj();
+    MultiCache mcd = new MultiCache(codCache, criador, data, desc_x, coor);
+    }
    //Método que valida login do utilizador
    
    public boolean validaLogin(String usr, String pwd){

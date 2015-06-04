@@ -7,7 +7,9 @@ import java.util.*;
 
 public class CacheMisterio extends Caches
 {
-    private String puzzle;
+    private String adivinhaP;
+    private String adivinhaR;
+    private String obj;
 
     /*
      * Construtores
@@ -17,31 +19,50 @@ public class CacheMisterio extends Caches
     public CacheMisterio() 
     {
         super();
-        this.puzzle = "";
+        this.adivinhaP = "";
+        this.adivinhaR = "";
+        
     }
     //Construtor parametros
-    public CacheMisterio(String pz, String codigo, String criador, GregorianCalendar data, String descricao_extra, Coordenadas coordenadas)
+    public CacheMisterio(String adP, String adR, String objt, String codigo, String criador, GregorianCalendar data, String descricao_extra, Coordenadas coordenadas)
     {
     super(codigo, criador, data, descricao_extra, coordenadas);
-    this.puzzle = pz;
+    this.adivinhaP = adP;
+    this.adivinhaR = adR;
+    this.obj = objt;
     }
     //Construtor copia
     public CacheMisterio(CacheMisterio cm)
     {
     super(cm.getCodigo(), cm.getCriador(), cm.getData(), cm.getDesc(), cm.getCoord());
-    this.puzzle = cm.getPuzzle();
+    this.adivinhaP = cm.getAdP();
+    this.adivinhaR = cm.getAdR();
+    this.obj = cm.getObj();
     }
     
     //GETS
-    public String getPuzzle()
+    public String getAdP()
     {
-    return this.puzzle;}
+    return this.adivinhaP;}
+    
+    public String getAdR()
+    {
+    return this.adivinhaR;}
+    
+    public String getObj() {
+    return this.obj;}
+    
     //SETS
-    public void setPuzzle(String pz)
+    public void setAdP(String adP)
     {
-    this.puzzle = pz;}
+    this.adivinhaP = adP;}
     
+    public void setAdR(String adR)
+    {
+    this.adivinhaP = adR;}
     
+    public void setObj(String objt) {
+    this.obj = objt;}
     
     
 

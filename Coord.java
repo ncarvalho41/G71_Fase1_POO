@@ -70,8 +70,19 @@ public void setDir(String dir)
 {this.direcao = dir;}
 
 
+/*
+ * Métodos
+ */
 
-
+public String toString() {
+    StringBuilder s = new StringBuilder();
+    s.append("\nGrau: " + this.getGrau());
+    s.append("\nMinuto: " + this.getMin());
+    s.append("\nSegundo: " + this.getSeg());
+    s.append("\nDireção: " + this.getDir());
+    
+    return s.toString();
+}
 
 
 
