@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.TreeSet;
+import java.util.HashMap;
 
 public class User implements Serializable
 {
@@ -18,14 +19,15 @@ public class User implements Serializable
    
    private TreeSet<String> amigos;
    private TreeSet<String> pedidosAmizade;
-   
+   private HashMap<String, Actividades> actividadesUser;
    
     /*
      * Construtores
      */
     
    //Construtor vazio
-   public User () {
+   
+   public User() {
    this.email ="";
    this.pw= "";
    this.nome="";
@@ -35,6 +37,7 @@ public class User implements Serializable
    this.pontos=0; 
    this.amigos = new TreeSet<String>();
    this.pedidosAmizade = new TreeSet<String>();
+   this.actividadesUser = new HashMap<>();
    }
    //Construtor parametro
    
@@ -50,6 +53,7 @@ public class User implements Serializable
    this.pontos=pts;
    this.amigos= new TreeSet<String>();
    this.pedidosAmizade=new TreeSet<String>();
+   this.actividadesUser = new HashMap<>();
    }
    
   
@@ -65,7 +69,7 @@ public class User implements Serializable
    this.pontos=u.getPontos();
    this.amigos=u.getAmigos();
    this.pedidosAmizade=u.getPedidos();
-
+   this.actividadesUser = u.getAct();
     }
    
    //GETS
@@ -96,7 +100,10 @@ public class User implements Serializable
     }
    public TreeSet<String> getPedidos() {
    return this.pedidosAmizade;}
-    
+   
+   public HashMap<String, Actividades> getAct(){
+   return this.actividadesUser;}
+   
    //SETS
    public void setPontos(int a) {
    this.pontos=a;
@@ -125,7 +132,8 @@ public class User implements Serializable
    public void setPedidos(TreeSet<String> pedA) {
    this.pedidosAmizade = pedA;
    }
-    
+   public void setAct(HashMap<String, Actividades> actU){
+   this.actividadesUser = actU;}
 
    /*
     * Metodos
@@ -165,6 +173,21 @@ public class User implements Serializable
    for(String pa : pedidosAmizade)
    {
    System.out.println(pa + "\n");}}
+   }
+   
+   public void consultaAct(){   
+       
+   int i = 0;
+   
+   for(Actividades act: actividadesUser.values()){
+       
+   System.out.println(act.getNome().toString() + "\n");
+   //System.out.println(act.getData().toString() + "\n");
+   }}
+   
+   public void adicionaActividade(String nome, String cod, String desc, Meteorologia met, String objR, String objC, GregorianCalendar dt, int dif){
+   Actividades act = new Actividades(nome, cod, desc, met, objR, objC, dt, dif);
+   this.actividadesUser.put(act.getCod(), act);
    }
    
    //Método que permite adicionar amigos à lista

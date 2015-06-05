@@ -51,4 +51,12 @@ public class Coordenadas implements Serializable
    public void setLongt(Coord longt)
    {this.longitude = longt;}
    
+   public String toString(){
+   StringBuilder s = new StringBuilder();
+   s.append("Latitude: " + this.getLat());
+   s.append("Longitude: " + this.getLongt());
+   return s.toString();}
+   
+   
+   
 }
