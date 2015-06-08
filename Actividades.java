@@ -1,5 +1,6 @@
 
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 public class Actividades
 {
@@ -106,8 +107,23 @@ public class Actividades
     this.dificuldade = dific;}
     
     
+    /*
+     *  Métodos
+     */
     
+    public String toString(){
     
+    StringBuilder s = new StringBuilder();
+    
+    s.append("Nome: " + this.nomeAt + "\n");
+    s.append("Código: " + this.codCache + "\n");
+    s.append("Descrição: " +this.descricao + "\n");
+    s.append("Objeto Recolhido: " + this.objRetirado + "\n");
+    s.append("Objeto Colocado: " + this.objColocado + "\n");
+    s.append("Data :" + this.data.get(Calendar.DAY_OF_MONTH) + "/" + this.data.get(Calendar.MONTH) + "/" + this.data.get(Calendar.YEAR) + "\n");
+    s.append("Nível de dificuldade: " + this.dificuldade + "\n");
+    return s.toString(); 
+   }
     
     
     

@@ -166,6 +166,7 @@ public class User implements Serializable
    }
    }
     
+   //Método que permite consultar pedidos de amizade do utilzador
    public void consultaPedidosAmizade(String email) {
    if(pedidosAmizade.isEmpty()){
    System.out.println("Não tem pedidos de amizade.");
@@ -175,21 +176,32 @@ public class User implements Serializable
    System.out.println(pa + "\n");}}
    }
    
-   public void consultaAct(){   
-       
-   int i = 0;
-   
-   for(Actividades act: actividadesUser.values()){
-       
-   System.out.println(act.getNome().toString() + "\n");
-   //System.out.println(act.getData().toString() + "\n");
-   }}
-   
+   //Método que permite adicionar nova atividade
    public void adicionaActividade(String nome, String cod, String desc, Meteorologia met, String objR, String objC, GregorianCalendar dt, int dif){
    Actividades act = new Actividades(nome, cod, desc, met, objR, objC, dt, dif);
    this.actividadesUser.put(act.getCod(), act);
    }
    
+   //Método que devolve lista de Actividades realizadas
+   
+   public ArrayList<Actividades> getActividades(){
+   ArrayList<Actividades> act = new ArrayList<>();
+   for(String a: actividadesUser.keySet()){
+    act.add(actividadesUser.get(a));}
+   return act;
+   }
+   
+   //Método que permite número de pontos que um utilizador possui
+  /* 
+   public int getPts(){
+   int p = 0;
+   
+   for(String a: actividadesUser.keySet()){
+    p = p + actividadesUser.();
+   }
+   return p;}
+   */
+  
    //Método que permite adicionar amigos à lista
    
    public void pedidoAmigo(String email) {
@@ -198,6 +210,8 @@ public class User implements Serializable
    
    }
    
+   
+   //Método que permite adicionar amigo à lista de amigos
    public void confirmaAmigo(String email) {
    pedidosAmizade.remove(email);
    amigos.add(email);

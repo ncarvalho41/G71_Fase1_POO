@@ -164,7 +164,7 @@ public class GeocachingAPP implements Serializable
     }
     
     /*
-     *                                                                     MÉTODOS DE VALIDAÇÃO DE LOGINS DE USER E ADMIN
+     *                                                        MÉTODOS DE VALIDAÇÃO DE LOGINS DE USER E ADMIN
      */
     
     //Método que executa login de utilizador normal
@@ -179,7 +179,7 @@ public class GeocachingAPP implements Serializable
     System.out.println("Insira a password\n");
     pwd = input.lerString();
     
-    boolean login = rede.validaLogin(usr, pwd);
+    boolean login = rede.validaLogin(usr, pwd); //login validado na rede
     
    if(login) { 
        user = rede.getUser(usr);
@@ -309,6 +309,7 @@ public class GeocachingAPP implements Serializable
     if (rede.existeUser(email))
         {    
         User u = rede.getUser(email);
+        System.out.println('\f');
         System.out.println(u.toString());
         System.out.println("\n\n1 - Atualizar informação pessoal\n");
         System.out.println("0 - Retroceder");
@@ -327,10 +328,10 @@ public class GeocachingAPP implements Serializable
     } else 
     {   System.out.println("Utilizador inexistente!");}
     }  
-    
+   
+   //Método que permite atualizar informação pessoal
    public static void atualizaInfo(){
    
-   User a = user;
    
    String nome = "";
    String email = "";
@@ -340,12 +341,13 @@ public class GeocachingAPP implements Serializable
    int diaN = 0;
    int mesN = 0;
    int anoN = 0;
-    
+   try{
+   System.out.println('\f');
    System.out.println(user.getNome() + " # Editar dados pessoais\n\n");
    System.out.println("Alterar Nome:\n");
    nome = input.lerString();
-   System.out.println("Alterar e-mail:\n");
-   email = input.lerString();
+   //System.out.println("Alterar e-mail:\n");
+   //email = input.lerString();
    System.out.println("Alterar password:\n");
    pwd = input.lerString();
    System.out.println("Alterar género:\n");
@@ -361,18 +363,32 @@ public class GeocachingAPP implements Serializable
    
    GregorianCalendar new_data = new GregorianCalendar(anoN, mesN-1, diaN);
    
+   user.setNome(nome);
+   //user.setEmail(email);
+   user.setPw(pwd);
+   user.setGenero(gnr);
+   user.setMorada(mord);
+   user.setData(new_data);
+   
+   System.out.println("Dados atualizados com sucesso. Prima enter para continuar.\n");
+   input.lerString();
 
-   a.setEmail(email);
+   } catch(Exception ex){
+   ex.printStackTrace();
+   System.out.println("Erro na atualização dos dados. Prima enter para voltar à sua página pessoal.\n");
+   input.lerString();
+   paginaPessoalUser();}
    
-   
-    
    
     }
     
    //Método que cria página de administração da APP
    
    public static void paginaAdmin(String adm) {
-   System.out.println("Admin");
+   System.out.println('\f');
+   System.out.println("Página de administração da GeocachingAPP\n\n");
+   System.out.println("1 - Gestão de atividades de Geocaching.\n");
+   System.out.println("0 - Sair.\n");
    }
    /*
     *                                                       MÉTODOS DE GESTÃO DE AMIGOS DE UM UTILIZADOR
@@ -414,28 +430,31 @@ public class GeocachingAPP implements Serializable
    //Método que permite consultar amigos de um utilizador
    public static void consultaListaAmigos(String email)
     {
-   user.consultaAmigos(user.getEmail());
+   user.consultaAmigos(user.getEmail()); //consulta amigos do utilizador na classe User
    System.out.println("Prima enter para retroceder");
    input.lerString();
    paginaAmigos();
    }
    
+   //Método que permite consultar pedidos de amizade de um utilizador
+   
    public static void consultaPedidos(String email) 
    {
    int flag = 1;
-   user.consultaPedidosAmizade(email);
+   user.consultaPedidosAmizade(email); //consulta pedidos de amizades pendentes
    input.lerString();
    while(flag == 1){
    System.out.println("Introduza o email de um pedido que pretenda confirmar. Prima enter para continuar");
    String mail = input.lerString();
-   if(email.length() > 1) {user.confirmaAmigo(mail);
-                           System.out.println("Inseri");
+   if(email.length() > 1) {user.confirmaAmigo(mail); //se email é string válida confirma amigo
                         if(user.getPedidos().size() == 0) flag = 0;}
    else {flag = 0;}
    }
    paginaAmigos();
    }
    
+   
+   //Método que permite enviar pedido de amizade a outro utilizador
    public static void enviaPedido() {
    ArrayList<String> list = new ArrayList<>(rede.listaUsers());
    {
@@ -444,8 +463,10 @@ public class GeocachingAPP implements Serializable
    }
    System.out.println("Introduza o email do utilizador que pretende adicionar:\n");
    String email = input.lerString();
-   user.pedidoAmigo(email);
-   
+   user.pedidoAmigo(email); //adiciona utilizador à lista de pedidos enviados
+   System.out.println(email + " - Pedido de amizade enviado com sucesso. Prima enter para continuar.\n");
+   input.lerString();
+   paginaAmigos();
    }
    
    
@@ -465,7 +486,7 @@ public class GeocachingAPP implements Serializable
    System.out.println("1 - Consultar atividade recente\n");
    System.out.println("2 - Inserir nova cache\n");
    System.out.println("3 - Registar descoberta de cache\n");
-   //System.out.println("4 - Eliminar cache\n");
+   System.out.println("4 - Eliminar cache\n");
    System.out.println("5 - Fazer <<report abuse>> de cache\n");
    System.out.println("6 - Consultar caches existentes\n");
    System.out.println("0 - Voltar para o menu inicial\n");
@@ -476,7 +497,7 @@ public class GeocachingAPP implements Serializable
    case 1 : {consultaAtividades(); break;}
    case 2 : {insereCache(); break;}
    case 3 : {descobreCache(); break;}
-   //case 4 : {eliminaCache(); break;}
+   case 4 : {eliminaCache(); break;}
    case 5 : {reportCache(); break;}
    
    case 6 : {consultaCaches(); break;}
@@ -490,7 +511,7 @@ public class GeocachingAPP implements Serializable
    
    
    
-   
+   //Método que cria menu de consulta de atividades do Utilizador e dos amigos
    public static void consultaAtividades(){
    System.out.println('\f');
    System.out.println(user.getNome() + " # Atividades de Geocaching\n\n");
@@ -502,25 +523,62 @@ public class GeocachingAPP implements Serializable
    
    switch(op){
    case 1 : {consultaAtividadesPessoais(); break;}
-   //case 2 : {consultaAtividadesAmigos(); break;}
+   case 2 : {consultaAtividadesAmigos(); break;}
    case 3 : {menuAtividades(); break;}
    }
    
     }
    
+   //Método que permite consultar atividades realizadas pelo Utilizador
    public static void consultaAtividadesPessoais(){
-    
-   System.out.println('\f');
-   System.out.println(user.getNome() + " # Atividades recentes\n\n");
-   user.consultaAct();
-   System.out.println("Prima enter para retroceder.\n");
+   ArrayList<Actividades> act = user.getActividades();
+   for(Actividades a: act){
+   System.out.println(a.getCod() + "\n");
+   }
+   System.out.println("Insira o código de uma atividade cujo detalhe pretenda consultar:\n");
+   String codCache = input.lerString();
+   
+   for(Actividades at: act){
+   if(at.getCod().equals(codCache)){
+   System.out.println(at.toString());}
+   }
+   System.out.println("Prima enter para continuar.\n");
    input.lerString();
    consultaAtividades();
    }
    
-    
-    
    
+   //Método que permite consultar atividades realizadas por amigos
+   public static void consultaAtividadesAmigos(){
+   System.out.println('\f');
+   user.consultaAmigos(user.getEmail());
+   System.out.println("Insira o código do amigo cuja atividade pretende consultar:\n");
+   String email = input.lerString();
+   
+   User userAmigo = rede.getUser(email);
+   
+   ArrayList<Actividades> act = userAmigo.getActividades();
+   
+   for(Actividades a: act){
+   System.out.println(a.getCod() + "\n");
+   }
+   System.out.println("Insira o código de uma atividade cujo detalhe pretenda consultar:\n");
+   String codCache = input.lerString();
+   
+   for(Actividades at: act){
+   if(at.getCod().equals(codCache)){
+   System.out.println(at.toString());}
+   }
+   System.out.println("Prima enter para continuar.\n");
+   input.lerString();
+   consultaAtividades();
+   
+   
+   }
+   
+    
+    
+   //Método que cria menu de inserção de nova cache
    public static void insereCache(){
    System.out.println('\f');
    System.out.println(user.getNome() + " # Inserir cache\n\n");
@@ -545,7 +603,7 @@ public class GeocachingAPP implements Serializable
    
 
     
-    
+   //Método que permite criar nova Micro-cache
    public static void insereMicroC(){
     
     String codCache = "";
@@ -589,6 +647,8 @@ public class GeocachingAPP implements Serializable
    
     }
     
+    
+    //Método que permite criar nova Multi-cache
     public static void insereMultiC(){
     
     String codCache = "";
@@ -608,7 +668,7 @@ public class GeocachingAPP implements Serializable
     nCaches = input.lerInt();
     Coordenadas coordends = null;
     ArrayList<Coordenadas> listCaches = new ArrayList<>();
-    for (i=0;i<nCaches;i++) {
+    for (i=0;i<nCaches;i++) {  //ciclo para introduzir número de localizações que a multi-cache terá, inserido pelo user
     System.out.println('\f');
     System.out.println("Localização " + (i+1));
     coordends = getCoordenadas();
@@ -634,7 +694,7 @@ public class GeocachingAPP implements Serializable
     
     GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
     
-    rede.registaMultiCache(codCache, user.getEmail(), data, desc_x, last, obj, listCaches);
+    rede.registaMultiCache(codCache, user.getEmail(), data, desc_x, last, obj, listCaches); //adciona cache à base de dados (rede)
     
     System.out.println("Multi-cache " + codCache + " criada com sucesso. Prima enter para continuar\n");
     input.lerString();
@@ -646,6 +706,7 @@ public class GeocachingAPP implements Serializable
     }
     }
     
+    //Método que permite criar nova Cache-mistério
     public static void insereCacheM(){
     
     String codCache = "";
@@ -680,7 +741,7 @@ public class GeocachingAPP implements Serializable
     
     Coordenadas cor = getCoordenadas();
     
-    rede.registaCacheMist(codCache, user.getEmail(), data, desc_x, cor, obj, adivinhaP, adivinhaR);
+    rede.registaCacheMist(codCache, user.getEmail(), data, desc_x, cor, obj, adivinhaP, adivinhaR); //adiciona cache à base de dados (rede)
     
     System.out.println("Cache-mistério " + codCache + " criada com sucesso. Prima ok para continuar.");
     input.lerString();
@@ -694,6 +755,23 @@ public class GeocachingAPP implements Serializable
     
     }
     
+    //Método que permite eliminar uma cache que tenha sido introduzida pelo utilizador
+    public static void eliminaCache(){
+    HashMap <String, Caches> caches = new HashMap<>(rede.getCaches());
+    Caches c;
+    for(String codigo: caches.keySet()){
+    c = caches.get(codigo);
+    if(c.getCriador().equals(user.getEmail())) {
+    System.out.println(caches.toString());}}
+    System.out.println("Insira o código da cache que pretende eliminar:\n");
+    String cod = input.lerString();
+    rede.removeCache(cod);
+    System.out.println("Cache removida com sucesso.Prima enter para continuar.\n");
+    input.lerString();
+    menuAtividades();
+    }
+    
+    //Método que permite consultar as caches existentes
     public static void consultaCaches() {
         HashMap<String, Caches> caches = new HashMap<>(rede.getCaches());
         Caches c;
@@ -705,6 +783,7 @@ public class GeocachingAPP implements Serializable
         input.lerString();
     }
     
+    //Método para criação do menu de descoberta de novas caches (atividades)
     public static void descobreCache(){
         
     System.out.println('\f');
@@ -725,6 +804,7 @@ public class GeocachingAPP implements Serializable
     }
     }
     
+    //Método que insere descoberta de nova Micro-cache
     public static void descobreMicroC(){
       
     String codCache = "";
@@ -741,7 +821,7 @@ public class GeocachingAPP implements Serializable
    System.out.println("Insira código da cache descoberta:\n");
    codCache = input.lerString();
     
-    if(rede.isMicro(codCache)){
+    if(rede.isMicro(codCache)){    //confirma se código inserido pertence a uma micro-cache
     System.out.println("Insira o dia de hoje:\n");
     diaM = input.lerInt();
     System.out.println("Insira o mês atual:\n");
@@ -759,7 +839,7 @@ public class GeocachingAPP implements Serializable
     //Meteorologia meteo = getMeteo();
     GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
     
-    //Actividades act = new Actividade(nomeAt, codCache, descricao, null,"","", data, dificuldade);
+
     
     user.adicionaActividade(nomeAt, codCache, descricao, null, null, null, data, dificuldade);
     System.out.println("Registo de descoberta de micro-cache efetuado com sucesso. Prima enter para continuar\n");
@@ -768,6 +848,7 @@ public class GeocachingAPP implements Serializable
    }
    }
    
+   //Método que insere descoberta de nova multi-cache
    public static void descobreMultiC(){
      
    String codCache = "";
@@ -786,7 +867,7 @@ public class GeocachingAPP implements Serializable
    System.out.println("Insira código da cache descoberta:\n");
    codCache = input.lerString();
     
-   if(rede.isMulti(codCache)){
+   if(rede.isMulti(codCache)){ //confirma se código inserido pertence a uma multi-cache
    System.out.println("Insira o dia de hoje:\n");
    diaM = input.lerInt();
    System.out.println("Insira o mês atual:\n");
@@ -816,7 +897,9 @@ public class GeocachingAPP implements Serializable
    descobreCache();
    }
    }
-    
+   
+   
+   //Método que insere descoberta de nova cache-mistério
    public static void descobreCacheMist(){
    String codCache = "";
    String nomeAt;    
@@ -834,8 +917,8 @@ public class GeocachingAPP implements Serializable
    System.out.println("Insira código da cache descoberta:\n");
    codCache = input.lerString();
     
-   if(rede.isMistery(codCache)){
-       if(rede.adivinhaCache(codCache)){
+   if(rede.isMistery(codCache)){   //confirma se código inserido pertence a uma cache-mistério
+       if(rede.adivinhaCache(codCache)){ //confirma se resposta ao enigma está correta
    System.out.println("Insira o dia de hoje:\n");
    diaM = input.lerInt();
    System.out.println("Insira o mês atual:\n");
@@ -857,7 +940,6 @@ public class GeocachingAPP implements Serializable
    //Meteorologia meteo = getMeteo();
    GregorianCalendar data = new GregorianCalendar(ano, mes-1, diaM);
     
-   //Actividades act = new Actividade(nomeAt, codCache, descricao, null,"","", data, dificuldade);
     
    user.adicionaActividade(nomeAt, codCache, descricao, null, objR, objC, data, dificuldade*3);
    System.out.println("Registo de descoberta de Cache-mistério efetuado com sucesso. Prima enter para continuar\n");
@@ -870,6 +952,7 @@ public class GeocachingAPP implements Serializable
    }
    }
    
+   //Método que permite fazer report abuse de uma cache
    public static void reportCache(){
    
    String codCache = "";
@@ -884,11 +967,11 @@ public class GeocachingAPP implements Serializable
    rep = input.lerString();
    
    String report = codCache + "-" + rep + "\n";
-   rede.addReport(report);
+   rede.addReport(report); //insere na arraylist código da cache e motivos pelos quais é feito o report
    
    System.out.println("Problema na cache reportado com sucesso. Outras caches com reports:\n");
    
-   rede.getReported();
+   rede.getReported(); //Lista caches com problemas reportados
    
    System.out.println("Prima enter para continuar.\n");
    input.lerString();
@@ -896,6 +979,8 @@ public class GeocachingAPP implements Serializable
    }
    }
    
+   
+   //Método que permite ao utilizador determinar coordenadas na criação de nova cache
    public static Coordenadas getCoordenadas()
    {
    Coordenadas cor = new Coordenadas();
@@ -904,7 +989,7 @@ public class GeocachingAPP implements Serializable
    int segLt = 0;
    int grauLt = 0;
    String dirLt = "";
-   
+   System.out.println('\f');
    System.out.println("Inserir coordenadas latitude\n");
    System.out.println("Inserir grau latitude:\n");
    grauLt = input.lerInt();

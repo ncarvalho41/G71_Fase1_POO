@@ -39,12 +39,13 @@ comment24.params=email
 comment24.target=void\ consultaAmigos(java.lang.String)
 comment25.params=email
 comment25.target=void\ consultaPedidosAmizade(java.lang.String)
-comment26.params=
-comment26.target=void\ consultaAct()
-comment27.params=nome\ cod\ desc\ met\ objR\ objC\ dt\ dif
-comment27.target=void\ adicionaActividade(java.lang.String,\ java.lang.String,\ java.lang.String,\ Meteorologia,\ java.lang.String,\ java.lang.String,\ java.util.GregorianCalendar,\ int)
+comment26.params=nome\ cod\ desc\ met\ objR\ objC\ dt\ dif
+comment26.target=void\ adicionaActividade(java.lang.String,\ java.lang.String,\ java.lang.String,\ Meteorologia,\ java.lang.String,\ java.lang.String,\ java.util.GregorianCalendar,\ int)
+comment27.params=
+comment27.target=java.util.ArrayList\ getActividades()
 comment28.params=email
 comment28.target=void\ pedidoAmigo(java.lang.String)
+comment28.text=\ \n\ \ \ public\ int\ getPts(){\n\ \ \ int\ p\ \=\ 0;\n\ \ \ \n\ \ \ for(String\ a\:\ actividadesUser.keySet()){\n\ \ \ \ p\ \=\ p\ +\ actividadesUser.();\n\ \ \ }\n\ \ \ return\ p;}\n
 comment29.params=email
 comment29.target=void\ confirmaAmigo(java.lang.String)
 comment3.params=

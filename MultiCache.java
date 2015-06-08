@@ -62,8 +62,8 @@ public class MultiCache extends Caches
     StringBuilder s = new StringBuilder();
     s.append("\nCódigo: " + this.getCodigo());
     s.append("\nDescrição: " + this.getDesc());
-    s.append("\nObjeto secreto: " + this.getObj());
-    s.append("\nLocalização: " + this.getCoordenadas());
+    //s.append("\nObjeto secreto: " + this.getObj());
+    //s.append("\nLocalização: " + this.getCoordenadas());
     s.append("\nData de criação: " + this.getData());
     return s.toString();
     }

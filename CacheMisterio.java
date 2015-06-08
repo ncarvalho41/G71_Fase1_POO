@@ -23,8 +23,9 @@ public class CacheMisterio extends Caches
         this.adivinhaR = "";
         
     }
+    
     //Construtor parametros
-    public CacheMisterio(String adP, String adR, String objt, String codigo, String criador, GregorianCalendar data, String descricao_extra, Coordenadas coordenadas)
+    public CacheMisterio(String codigo, String criador, GregorianCalendar data, String descricao_extra, Coordenadas coordenadas,String objt, String adP, String adR)
     {
     super(codigo, criador, data, descricao_extra, coordenadas);
     this.adivinhaP = adP;
@@ -59,7 +60,7 @@ public class CacheMisterio extends Caches
     
     public void setAdR(String adR)
     {
-    this.adivinhaP = adR;}
+    this.adivinhaR = adR;}
     
     public void setObj(String objt) {
     this.obj = objt;}
@@ -68,11 +69,15 @@ public class CacheMisterio extends Caches
     StringBuilder s = new StringBuilder();
     s.append("\nCódigo: " + this.getCodigo());
     s.append("\nDescrição: " + this.getDesc());
-    s.append("\nObjeto secreto: " + this.getObj());
+    //s.append("\nObjeto secreto: " + this.getObj());
     s.append("\nLocalização: " + this.getCoord());
     s.append("\nData de criação: " + this.getData());
     return s.toString();
     }
 
-
+    public String getEnigma(){
+    StringBuilder perg = new StringBuilder();
+    perg.append(adivinhaP);
+    return perg.toString();
+   }
 }

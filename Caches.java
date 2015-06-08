@@ -84,10 +84,6 @@ this.coordenadas = crd;
 
 
 
-
-
-
-
  
 }
 
